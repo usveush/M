@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import asyncio
 import os
 from threading import Thread
 from flask import Flask
@@ -20,14 +19,14 @@ Thread(target=run_web, daemon=True).start()
 
 # --- إعدادات البوت ---
 intents = discord.Intents.default()
-intents.members = True  # تفعيل خاصية جلب الأعضاء
+intents.members = True  # ضروري لتفعيل جلب الاعضاء
 
 bot = commands.Bot(command_prefix=".", intents=intents)
 
 # --- البيانات الخاصة بالعملية ---
-GUILD_ID = 1234567890123456789  # <--- ضع ايدي السيرفر هنا
-USER_ID = 1155991299195945030   # ايدي الشخص
-ROLE_ID = 1527939953881911468   # ايدي الرتبة
+GUILD_ID = 000000000000000000  # <--- حط آيدي السيرفر حقك هنا بدال الأصفار
+USER_ID = 1155991299195945030   # آيدي الشخص
+ROLE_ID = 1527939953881911468   # آيدي الرتبة
 
 @bot.event
 async def on_ready():
@@ -46,13 +45,13 @@ async def on_ready():
                 # التأكد من ترتيب الصلاحيات
                 if role.position < guild.me.top_role.position and not role.managed:
                     await member.remove_roles(role, reason="إزالة تلقائية عبر السكربت المباشر")
-                    print(f"🎉 تم إزالة الرتبة ({role.name}) من ({member.display_name}) بنجاح!")
+                    print(f"🎉 تم إزالة الرتبة ({role.name}) من العضو ({member.display_name}) بنجاح!")
                 else:
                     print("⚠️ خطأ صلاحيات: رتبة البوت أقل من الرتبة المراد إزالتها، أو أنها رتبة نظام تلقائية.")
             else:
-                print("❌ لم يتم العثور على العضو أو الرتبة في السيرفر.")
+                print("❌ لم يتم العثور على العضو أو الرتبة داخل هذا السيرفر.")
         else:
-            print("❌ لم يتم العثور على السيرفر.")
+            print("❌ لم يتم العثور على السيرفر، تأكد من صحة GUILD_ID وأن البوت داخل السيرفر.")
 
     except Exception as e:
         print(f"❌ حدث خطأ أثناء التنفيذ: {e}")
